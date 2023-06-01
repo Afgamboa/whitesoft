@@ -1,4 +1,4 @@
-import react, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./css/Home.css";
 import { getCountries, newUser } from "./js/home.js";
 
@@ -18,9 +18,9 @@ const Home = () => {
       } catch (e) {
         console.log(e);
         setErrors(e.message);
-      setTimeout(() => {
-        setErrors("");
-      }, 2500);
+        setTimeout(() => {
+          setErrors("");
+        }, 2500);
       }
     };
     getCountriesAsync();
@@ -30,14 +30,14 @@ const Home = () => {
     try {
       const res = await newUser(username, userCountry);
       setSuccess(res.message);
-      setTimeout(() => {
-        setSuccess("");
-      }, 2500);
-      setUsername("");
     } catch (e) {
       setErrors(e.message);
+    } finally {
       setTimeout(() => {
         setErrors("");
+        setSuccess("");
+        setUsername("");
+        setUserCountry("");
       }, 2500);
     }
   };
@@ -54,6 +54,7 @@ const Home = () => {
             onChange={(e) => {
               setUsername(e.target.value);
             }}
+            value={username}
           />
           <select
             name="countries"
@@ -61,17 +62,17 @@ const Home = () => {
             onChange={(e) => setUserCountry(e.target.value)}
             className="form-select mb-3 countrie"
             id="countries"
+            value={userCountry}
           >
-            {countries && (
-              <>
-                <option value="" defaultValue>Pais...</option>
-                {countries.map((country, index) => (
-                  <option key={index} value={country}>
-                    {country}
-                  </option>
-                ))}
-              </>
-            )}
+            <option value="" defaultValue>
+              Pais...
+            </option>
+            {countries &&
+              countries.map((country, index) => (
+                <option key={index} value={country}>
+                  {country}
+                </option>
+              ))}
           </select>
           <button
             className="btn btn-outline-light"
