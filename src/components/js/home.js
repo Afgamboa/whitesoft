@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://ec2-54-167-121-27.compute-1.amazonaws.com";
+const baseUrl = "http://ec2-54-163-173-137.compute-1.amazonaws.com";
 
 export const getCountries = async () => {
   const response = await axios.get(`${baseUrl}/countries`, {
